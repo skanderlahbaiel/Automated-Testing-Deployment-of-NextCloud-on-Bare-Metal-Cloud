@@ -93,7 +93,7 @@ TARGET_URL=os.getenv('TARGET_URL', 'http://skander-nextcloud.lijo')
 
 # Authentication details
 USERNAME=os.getenv('USERNAME', 'admin')
-PASSWORD=os.getenv('PASSWORD', '?aymen!lijo!pass!')
+PASSWORD=os.getenv('PASSWORD', 'xxxxxxx')
 
 # File paths
 CREATED_FILES_PATH=os.path.join(BASE_DIR, "created_files")
