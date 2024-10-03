@@ -32,7 +32,7 @@ This capstone project automates the deployment, testing, and documentation of Ne
 ## Getting Started
 1. **Clone Repository**: 
     ```sh
-    git clone https://github.com/yourusername/nextcloud-baremetal-deployment.git
+    git clone git@github.com:skanderlahbaiel/Automated-Testing-Deployment-of-NextCloud-on-Bare-Metal-Cloud.git
     ```
 2. **Deploy Infrastructure**: Navigate to `infrastructure_deployment/` and follow the instructions in `README.md`.
 3. **Deploy NextCloud**: Use the Helm charts in `nextcloud_deployment/` for deploying NextCloud on your Kubernetes cluster.
