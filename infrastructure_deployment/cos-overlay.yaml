@@ -1,0 +1,105 @@
+description: Overlay for deploying specified applications
+applications:
+  cos-proxy:
+    charm: cos-proxy
+    channel: beta
+    num_units: 1
+    to:
+      - lxd:1
+  grafana-agent:
+    charm: grafana-agent
+    channel: edge
+  nrpe:
+    charm: nrpe
+    channel: stable
+  ntp:
+    charm: ntp
+    channel: stable
+  telegraf:
+    charm: telegraf
+    channel: stable
+
+saas:
+  alertmanager-karma-dashboard:
+    url: admin/cos-aymen.alertmanager-karma-dashboard
+  grafana-dashboards:
+    url: admin/cos-aymen.grafana-dashboards
+  loki-logging:
+    url: admin/cos-aymen.loki-logging
+  prometheus-receive-remote-write:
+    url: admin/cos-aymen.prometheus-receive-remote-write
+  prometheus-scrape:
+    url: admin/cos-aymen.prometheus-scrape
+
+relations:
+
+- - ceph-fs:juju-info
+  - nrpe:general-info
+
+- - ceph-mon:juju-info
+  - telegraf:juju-info
+
+- - ceph-mon:metrics-endpoint
+  - prometheus-scrape:metrics-endpoint
+
+- - ceph-mon:nrpe-external-master
+  - nrpe:nrpe-external-master
+
+- - ceph-mon:prometheus
+  - cos-proxy:prometheus-target
+
+- - ceph-osd:juju-info
+  - ntp:juju-info
+
+- - ceph-osd:juju-info
+  - telegraf:juju-info
+
+- - ceph-osd:nrpe-external-master
+  - nrpe:nrpe-external-master
+
+- - cos-proxy:downstream-grafana-dashboard
+  - grafana-dashboards:grafana-dashboard
+
+- - cos-proxy:downstream-prometheus-scrape
+  - prometheus-scrape:metrics-endpoint
+
+- - ceph-dashboard:grafana-dashboard
+  - cos-proxy:dashboards 
+
+- - cos-proxy:juju-info
+  - grafana-agent:juju-info
+
+- - cos-proxy:juju-info
+  - telegraf:juju-info
+
+- - grafana-agent:grafana-dashboards-provider
+  - grafana-dashboards:grafana-dashboard
+
+- - loki-logging:logging
+  - grafana-agent:logging-consumer
+
+- - microk8s:cos-agent
+  - grafana-agent:cos-agent
+
+- - microk8s:juju-info
+  - nrpe:general-info
+
+- - microk8s:juju-info
+  - telegraf:juju-info
+
+- - nrpe:monitors
+  - cos-proxy:monitors
+
+- - prometheus-receive-remote-write:receive-remote-write
+  - grafana-agent:send-remote-write
+
+- - telegraf:dashboards
+  - cos-proxy:dashboards
+
+- - telegraf:prometheus-client
+  - cos-proxy:prometheus-target
+
+- - telegraf:prometheus-rules
+  - cos-proxy:prometheus-rules
+
+

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cleanup.delete_test_files &mdash; NextCloud Functionl Tests 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            NextCloud Functionl Tests
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">functional_testing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">NextCloud Functionl Tests</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cleanup.delete_test_files</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cleanup.delete_test_files</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functional_testing.config.configuration</span> <span class="kn">import</span> <span class="n">DOWNLOAD_DIRECTORY</span>
+<span class="kn">from</span> <span class="nn">functional_testing.config.configuration</span> <span class="kn">import</span> <span class="n">CREATED_FILES_PATH</span>
+
+<div class="viewcode-block" id="delete_files_starting_with">
+<a class="viewcode-back" href="../../cleanup.html#cleanup.delete_test_files.delete_files_starting_with">[docs]</a>
+<span class="k">def</span> <span class="nf">delete_files_starting_with</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides utility functions to delete test-related files from specified directories. </span>
+<span class="sd">It primarily supports cleanup activities post-testing by removing files that match a given prefix. </span>
+<span class="sd">This is particularly useful in scenarios where test execution generates temporary files that need to be cleaned up afterwards.</span>
+
+<span class="sd">The module relies on environment variables to dynamically set the paths of directories involved in the testing processes, </span>
+<span class="sd">such as where downloaded files or created files during tests are stored. Users must configure these environment variables </span>
+<span class="sd">appropriately to ensure that the cleanup process targets the correct directories.</span>
+
+<span class="sd">Environment Variables:</span>
+<span class="sd">----------------------</span>
+<span class="sd">The module uses the following environment variables to determine the directories for file cleanup operations:</span>
+
+<span class="sd">- ``DOWNLOAD_DIRECTORY``: Specifies the directory path where files downloaded during tests are stored. This path is used</span>
+<span class="sd">  by default if no other directory is specified in the cleanup function calls.</span>
+<span class="sd">- ``CREATED_FILES_PATH``: Specifies the directory path where files created during tests are stored. This allows for</span>
+<span class="sd">  separation of download and upload test artifacts.</span>
+
+<span class="sd">Setting Environment Variables:</span>
+<span class="sd">------------------------------</span>
+<span class="sd">To set these environment variables in your environment, follow the instructions based on your operating system:</span>
+
+<span class="sd">For Unix/Linux/macOS:</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">Open your terminal and use the ``export`` command to set each environment variable. For example:</span>
+
+<span class="sd">.. code-block:: bash</span>
+
+<span class="sd">   export DOWNLOAD_DIRECTORY=/path/to/download/directory</span>
+<span class="sd">   export CREATED_FILES_PATH=/path/to/created/files/directory</span>
+
+<span class="sd">These commands can be added to your shell profile file (e.g., ``.bashrc``, ``.zshrc``) to persist the variables across sessions.</span>
+
+<span class="sd">For Windows:</span>
+<span class="sd">^^^^^^^^^^^^</span>
+
+<span class="sd">Use the System Properties dialog to set environment variables:</span>
+
+<span class="sd">1. Open System Properties (you can search for it in the Start menu).</span>
+<span class="sd">2. Go to the Advanced tab and click on Environment Variables.</span>
+<span class="sd">3. Add new system variables for ``DOWNLOAD_DIRECTORY`` and ``CREATED_FILES_PATH`` with their respective paths.</span>
+
+<span class="sd">Alternatively, set them temporarily in a Command Prompt window:</span>
+
+<span class="sd">.. code-block:: powershell</span>
+
+<span class="sd">   set DOWNLOAD_DIRECTORY=C:\\path\\to\\download\\directory</span>
+<span class="sd">   set CREATED_FILES_PATH=C:\\path\\to\\created\\files\\directory</span>
+
+<span class="sd">Functions:</span>
+<span class="sd">----------</span>
+<span class="sd">The module contains the following function(s):</span>
+
+<span class="sd">- ``delete_files_starting_with(prefix, directory)``: Deletes files in the specified ``directory`` that </span>
+<span class="sd">  start with the given ``prefix``. By default, it targets the ``DOWNLOAD_DIRECTORY``. The function prints the names of </span>
+<span class="sd">  deleted files or indicates if no files were deleted.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">------</span>
+<span class="sd">To use this module, import it into your test scripts and invoke ``delete_files_starting_with`` with the appropriate </span>
+<span class="sd">arguments. Here&#39;s an example that cleans up test-related files from both download and upload directories:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">   from functional_testing.cleanup import delete_files_starting_with, DOWNLOAD_DIRECTORY, CREATED_FILES_PATH</span>
+
+<span class="sd">   # Delete downloaded test files</span>
+<span class="sd">   delete_files_starting_with(&#39;test_&#39;, DOWNLOAD_DIRECTORY)</span>
+
+<span class="sd">   # Delete uploaded/created test files</span>
+<span class="sd">   delete_files_starting_with(&#39;test_&#39;, CREATED_FILES_PATH)</span>
+
+<span class="sd">Ensure you have set the necessary environment variables as described to correctly target the cleanup directories.</span>
+
+<span class="sd">.. note:: This module assumes that the specified directories exist and that the executing user has the necessary </span>
+<span class="sd">   permissions to delete files from them.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+    <span class="n">deleted_files</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Initialize an empty list to keep track of deleted files</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="n">deleted_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>  <span class="c1"># Append the deleted filename to the list</span>
+
+    <span class="c1"># Check if any files were deleted and print the list</span>
+    <span class="k">if</span> <span class="n">deleted_files</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deleted files:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">deleted_files</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No files were deleted.&quot;</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../cleanup.html#cleanup.delete_test_files.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The main function that executes the cleanup process.</span>
+
+<span class="sd">    This function calls `delete_files_starting_with` for both the download directory and the directory</span>
+<span class="sd">    where created files are stored, using the prefix ``&#39;test_&#39;`` to identify files targeted for deletion.</span>
+
+<span class="sd">    The main function is necessary because this script is intended to be executed directly, </span>
+<span class="sd">    specifically from a setup.sh file which automates the testing process. By defining a main function, </span>
+<span class="sd">    we ensure that the cleanup process is executed when the script is run as a standalone program. </span>
+<span class="sd">    This is controlled by the `if __name__ == &quot;__main__&quot;:` condition at the end of the script.</span>
+
+<span class="sd">    The main function is a common pattern in Python programming for providing a script entry point. </span>
+<span class="sd">    It allows the script to act as either reusable modules or as standalone programs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">delete_files_starting_with</span><span class="p">(</span><span class="s1">&#39;test_&#39;</span><span class="p">,</span> <span class="n">DOWNLOAD_DIRECTORY</span><span class="p">)</span>
+    <span class="n">delete_files_starting_with</span><span class="p">(</span><span class="s1">&#39;test_&#39;</span><span class="p">,</span> <span class="n">CREATED_FILES_PATH</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Skander Lahbaiel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+Metadata-Version: 2.1
+Name: cluster_deployment
+Version: 0.1.0
+Summary: A project to test the deployment of Nextcloud on Kubernetes
+Author-email: skander_lahbaiel <lahbaeil@gmail.com>
+Requires-Python: >=3.7
+Requires-Dist: selenium
+Requires-Dist: pytest
+Requires-Dist: allure-pytest
+Requires-Dist: pyperclip

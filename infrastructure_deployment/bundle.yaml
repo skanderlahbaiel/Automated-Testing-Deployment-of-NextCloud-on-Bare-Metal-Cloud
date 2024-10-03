@@ -1,0 +1,94 @@
+description: A highly-availabe microk8s cluster
+series: jammy
+name: charmed-microk8s
+applications:
+  microk8s:
+    bindings:
+      "": oam-space
+    channel: 1.28/stable
+    charm: microk8s
+    num_units: 3
+    expose: true
+    options:
+      role: control-plane
+    to:
+    - 1
+    - 2
+    - 3
+
+  ceph-csi:
+    charm: ceph-csi
+    channel: 1.28/stable
+    options: 
+      namespace: kube-system
+
+  ceph-fs:
+    bindings:
+      "": oam-space
+    charm: ceph-fs
+    channel: quincy/stable
+    num_units: 3
+    to:
+    - lxd:1
+    - lxd:2
+    - lxd:3
+
+  ceph-dashboard:
+    charm: ceph-dashboard
+    channel: quincy/stable
+    options:
+      ssl_ca: include-base64:///home/gitlab-runner/secrets/ceph-dashboard/ca.crt
+      ssl_cert: include-base64:///home/gitlab-runner/secrets/ceph-dashboard/dashboard.crt
+      ssl_key: include-base64:///home/gitlab-runner/secrets/ceph-dashboard/dashboard.key
+
+  ceph-mon:
+    bindings:
+      "": oam-space
+    charm: ceph-mon
+    channel: stable
+    num_units: 3
+    options:
+      customize-failure-domain: false
+      expected-osd-count: 3
+    to:
+    - lxd:1
+    - lxd:2
+    - lxd:3
+
+  ceph-osd:
+    bindings:
+      "": oam-space
+    charm: ceph-osd
+    channel: stable
+    num_units: 3
+    options:
+      aa-profile-mode: complain
+      autotune: false
+      bluestore: true
+      bluestore-compression-mode: none
+      customize-failure-domain: false  
+      osd-devices: /dev/sdb
+    to:
+    - 1
+    - 2
+    - 3
+
+machines:
+  "1": 
+    constraints: tags=node-5
+  "2": 
+    constraints: tags=node-6
+  "3": 
+    constraints: tags=node-7
+relations:
+- - ceph-osd 
+  - ceph-mon
+- - ceph-csi:kubernetes-info
+  - microk8s
+- - ceph-csi:ceph-client
+  - ceph-mon
+- - ceph-fs:ceph-mds
+  - ceph-mon:mds
+- - ceph-dashboard:dashboard
+  - ceph-mon:dashboard
+

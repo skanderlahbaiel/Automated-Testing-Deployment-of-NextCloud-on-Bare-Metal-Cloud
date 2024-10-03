@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "NextCloud Testing"
+version = "0.1.0"
+description = "A project to test the deployment of Nextcloud on Kubernetes"
+authors = [{name = "skander_lahbaiel", email = "lahbaeil@gmail.com"}]
+requires-python = ">=3.7"
+dependencies = [
+    "selenium",
+    "pytest",
+    "allure-pytest",
+    "pyperclip",
+]
+
+[tool.setuptools]
+packages = ["functional_testing","functional_testing.cleanup", "functional_testing.config", "functional_testing.utils", "functional_testing.tests", "charmed-microk8s","charmed-microk8s.check_failures" ]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

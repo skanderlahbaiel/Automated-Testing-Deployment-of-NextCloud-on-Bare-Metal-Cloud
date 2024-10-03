@@ -1,0 +1,32 @@
+name: systemd-logs
+status: passed
+meta:
+  type: summary
+items:
+- name: dev-test-node-5
+  status: passed
+  meta:
+    type: node
+  items:
+  - name: systemd_logs
+    status: passed
+    meta:
+      file: results/dev-test-node-5/systemd_logs
+- name: dev-test-node-6
+  status: passed
+  meta:
+    type: node
+  items:
+  - name: systemd_logs
+    status: passed
+    meta:
+      file: results/dev-test-node-6/systemd_logs
+- name: dev-test-node-7
+  status: passed
+  meta:
+    type: node
+  items:
+  - name: systemd_logs
+    status: passed
+    meta:
+      file: results/dev-test-node-7/systemd_logs

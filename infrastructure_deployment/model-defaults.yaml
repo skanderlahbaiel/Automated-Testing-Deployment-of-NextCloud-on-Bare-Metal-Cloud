@@ -1,0 +1,17 @@
+cloudinit-userdata: |
+  #cloud-config
+  apt:
+    preserve_sources_list: false
+    primary:
+      - arches: [amd64]
+        uri: http://archive.ubuntu.com/ubuntu/
+    security:
+      - arches: [amd64]
+        uri:  http://security.ubuntu.com/ubuntu/
+snap-store-proxy: ""
+container-image-metadata-url: ""
+agent-metadata-url: ""
+image-metadata-url: ""
+
+snap-store-assertions: ""
+juju-no-proxy: 10.0.0.0/8,192.168.0.0/16,172.16.7.0/24,127.0.0.1,localhost

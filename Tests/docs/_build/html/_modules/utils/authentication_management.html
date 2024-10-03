@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils.authentication_management &mdash; NextCloud Functionl Tests 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            NextCloud Functionl Tests
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">functional_testing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">NextCloud Functionl Tests</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">utils.authentication_management</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for utils.authentication_management</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.common.exceptions</span> <span class="kn">import</span> <span class="n">TimeoutException</span> 
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">functional_testing.config.configuration</span> <span class="kn">import</span> <span class="n">LOGIN_BUTTON_XPATH</span> 
+
+
+
+<span class="c1">### Green and Orange Logs ###</span>
+
+<div class="viewcode-block" id="orange_text">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.orange_text">[docs]</a>
+<span class="k">def</span> <span class="nf">orange_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[38;2;255;165;0m</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="green_text">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.green_text">[docs]</a>
+<span class="k">def</span> <span class="nf">green_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[92m</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>     </div>
+
+
+<span class="c1">### Login ###</span>
+
+<div class="viewcode-block" id="check_if_loggedIn">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.check_if_loggedIn">[docs]</a>
+<span class="k">def</span> <span class="nf">check_if_loggedIn</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">wait_time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if the user is logged in by verifying the presence of a token in the cookies.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver: The Selenium WebDriver instance.</span>
+<span class="sd">        wait_time: The maximum time to wait for the user to be logged in, in seconds.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the user is logged in, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">wait_time</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checking if the user is logged in&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">get_token_from_cookies</span><span class="p">(</span><span class="n">driver</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User is logged in&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User is not logged in&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="get_token_from_cookies">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.get_token_from_cookies">[docs]</a>
+<span class="k">def</span> <span class="nf">get_token_from_cookies</span><span class="p">(</span><span class="n">driver</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves the &#39;nc_token&#39; from the browser cookies.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The web driver instance controlling the browser.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The value of &#39;nc_token&#39; if found, None otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Retrieve all cookies</span>
+        <span class="n">cookies</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">get_cookies</span><span class="p">()</span>
+        <span class="c1"># Look for sesion cookie</span>
+        <span class="k">for</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="n">cookies</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cookie</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;oc_sessionPassphrase&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Session token found: </span><span class="si">{</span><span class="n">cookie</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">cookie</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User logged out or not logged in&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred while retrieving session token: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="check_successful_page_load">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.check_successful_page_load">[docs]</a>
+<span class="k">def</span> <span class="nf">check_successful_page_load</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">wait_time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if the page load is successful by verifying the presence of specific elements on the page.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used for interacting with the browser.</span>
+<span class="sd">        wait_time (int): The maximum time to wait for the elements to load, in seconds.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The ID of the first element that successfully loads within the specified wait time.</span>
+<span class="sd">             If none of the elements load within the wait time, returns None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">elements_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;body-login&quot;</span><span class="p">,</span> <span class="s2">&quot;app-dashboard&quot;</span><span class="p">]</span>
+    <span class="n">element_loaded</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">element_loaded</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">wait_time</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">element_id</span> <span class="ow">in</span> <span class="n">elements_ids</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">element_loaded</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                    <span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">element_id</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="n">TimeoutException</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element </span><span class="si">{</span><span class="n">element_id</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+                
+            
+    <span class="k">if</span> <span class="n">element_loaded</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span> <span class="k">raise</span> <span class="n">TimeoutException</span><span class="p">(</span><span class="s2">&quot;The page load was not successful&quot;</span><span class="p">)</span></div>
+
+            
+       
+    
+<div class="viewcode-block" id="load_nextcloud_page">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.load_nextcloud_page">[docs]</a>
+<span class="k">def</span> <span class="nf">load_nextcloud_page</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">TARGET_URL</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads the NextCloud page.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used for browser automation.</span>
+<span class="sd">        TARGET_URL (str): The URL of the NextCloud instance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading NextCloud page: </span><span class="si">{</span><span class="n">TARGET_URL</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TARGET_URL</span><span class="p">)</span>
+    <span class="n">element</span> <span class="o">=</span> <span class="n">check_successful_page_load</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="c1"># If the element is found, the login test passes. Else, it fails</span>
+    <span class="k">assert</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;The app-dashboard element was not found.&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">NextCloud page loaded successfully&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Loading Nexcloud web page failed page failed&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="login_to_nextcloud">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.login_to_nextcloud">[docs]</a>
+<span class="k">def</span> <span class="nf">login_to_nextcloud</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">TARGET_URL</span><span class="p">,</span> <span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the login form, submits and checks for successful login.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used for browser automation.</span>
+<span class="sd">        TARGET_URL (str): The URL of the NextCloud instance.</span>
+<span class="sd">        USERNAME (str): The username to use for logging in.</span>
+<span class="sd">        PASSWORD (str): The password to use for logging in.</span>
+<span class="sd">        LOGIN_BUTTON_XPATH (str): The XPath expression for the login button.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the login is successful, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Logging into NextCloud. URL: </span><span class="si">{</span><span class="n">TARGET_URL</span><span class="si">}</span><span class="s2">, Username: </span><span class="si">{</span><span class="n">USERNAME</span><span class="si">}</span><span class="s2">, Password: </span><span class="si">{</span><span class="n">PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Wait up to 10 seconds for the username input field to appear</span>
+    <span class="n">username_input</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)))</span>
+    <span class="c1"># Wait up to 10 seconds for the password input field to appear</span>
+    <span class="n">password_input</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)))</span>
+
+    <span class="c1"># Enter the username and password</span>
+    <span class="n">username_input</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">)</span>
+    <span class="n">password_input</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">PASSWORD</span><span class="p">)</span>
+    
+    <span class="c1"># Wait for the login button to be clickable</span>
+    <span class="n">login_button</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">)</span>
+    <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">element_to_be_clickable</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">)))</span>
+    <span class="n">login_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="c1"># Check successful login</span>
+    <span class="n">element</span> <span class="o">=</span> <span class="n">check_if_loggedIn</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="c1">### bug with login when passing from share to delete</span>
+    <span class="c1"># If the element is found, the login test passes. Else, it fails</span>
+    <span class="k">assert</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Login failed&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checking the welcome modal&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+            <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s1">&#39;modal-description-lyiks&#39;</span><span class="p">)))</span>
+            <span class="n">close_button</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="s1">&#39;#modal-description-lyiks .modal-container__close&#39;</span><span class="p">)</span>
+            <span class="n">close_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Close button clicked&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">green_text</span><span class="p">(</span><span class="s2">&quot;Login succeeded&quot;</span><span class="p">)</span> 
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">TimeoutException</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modal did not appear&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">green_text</span><span class="p">(</span><span class="s2">&quot;Login succeeded&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Login failed&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+    <span class="c1"># This test navigates to the files page and opens the file upload dialog, its purpose is to verify that uploading button is visible</span>
+
+<span class="c1">### Logout ###</span>
+
+<div class="viewcode-block" id="toggle_settings_menu">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.toggle_settings_menu">[docs]</a>
+<span class="k">def</span> <span class="nf">toggle_settings_menu</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="n">OPEN_SETTINGS_MENU_XPATH</span><span class="p">,</span> <span class="n">CLOSED_SETTINGS_MENU_XPATH</span><span class="p">,</span> <span class="n">expected_state</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Toggles the settings menu to the expected state (&#39;open&#39; or &#39;closed&#39;).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used for browser automation.</span>
+<span class="sd">        expected_state (str): The expected state of the settings menu. Defaults to &#39;open&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">settings_menu_open</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">OPEN_SETTINGS_MENU_XPATH</span><span class="p">))</span>
+    <span class="n">settings_menu_closed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">CLOSED_SETTINGS_MENU_XPATH</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">expected_state</span> <span class="o">==</span> <span class="s1">&#39;open&#39;</span> <span class="ow">and</span> <span class="n">settings_menu_closed</span><span class="p">:</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">CLOSED_SETTINGS_MENU_XPATH</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">expected_state</span> <span class="o">==</span> <span class="s1">&#39;closed&#39;</span> <span class="ow">and</span> <span class="n">settings_menu_open</span><span class="p">:</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">OPEN_SETTINGS_MENU_XPATH</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span></div>
+
+        
+        
+<div class="viewcode-block" id="click_on_logout">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.click_on_logout">[docs]</a>
+<span class="k">def</span> <span class="nf">click_on_logout</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">LOGOUT_BUTTON_PATH</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clicks on the logout button.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used to interact with the browser.</span>
+<span class="sd">        LOGOUT_BUTTON_PATH (str): The XPath of the logout button element.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;looking for the logout button&quot;</span><span class="p">)</span>
+        <span class="n">logout_button</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">LOGOUT_BUTTON_PATH</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scrolling to the logout button&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clicking the logout button&quot;</span><span class="p">)</span>
+        <span class="n">logout_button</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logout button clicked&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred while clicking the logout button: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="check_logout">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.check_logout">[docs]</a>
+<span class="k">def</span> <span class="nf">check_logout</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="o">=</span><span class="n">LOGIN_BUTTON_XPATH</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if the user has successfully logged out by waiting for the login button to appear.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver: The WebDriver instance used for interacting with the browser.</span>
+<span class="sd">        LOGIN_BUTTON_XPATH: The XPath of the login button element.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the logout was successful, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting for the login button to appear&quot;</span><span class="p">)</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">visibility_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">)))</span>
+        <span class="n">green_text</span><span class="p">(</span><span class="s2">&quot;Logout successful&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+    
+<div class="viewcode-block" id="perform_logout">
+<a class="viewcode-back" href="../../utils.html#utils.authentication_management.perform_logout">[docs]</a>
+<span class="k">def</span> <span class="nf">perform_logout</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">LOGOUT_BUTTON_PATH</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">,</span> <span class="n">OPEN_SETTINGS_MENU_XPATH</span><span class="p">,</span> <span class="n">CLOSED_SETTINGS_MENU_XPATH</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logs out of NextCloud.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        driver (WebDriver): The WebDriver instance used for browser automation.</span>
+<span class="sd">        LOGOUT_BUTTON_PATH (str): The XPath of the logout button element.</span>
+<span class="sd">        LOGIN_BUTTON_XPATH (str): The XPath of the login button element.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the logout is successful, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1">### Add a check (check token existence) to see if the user is logged in or not ###</span>
+        <span class="n">toggle_settings_menu</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="n">OPEN_SETTINGS_MENU_XPATH</span><span class="p">,</span> <span class="n">CLOSED_SETTINGS_MENU_XPATH</span><span class="p">,</span> <span class="n">expected_state</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">)</span>        
+        <span class="n">click_on_logout</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">LOGOUT_BUTTON_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">check_logout</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">LOGIN_BUTTON_XPATH</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred while logging out: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">raise</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Skander Lahbaiel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
