@@ -29,11 +29,3 @@ This capstone project automates the deployment, testing, and documentation of Ne
 - **Testing**: Selenium, Pytest, Sonobuoy, CIS benchmarks
 - **Programming Languages**: Python, Bash
 
-## Getting Started
-1. **Clone Repository**: 
-    ```sh
-    git clone git@github.com:skanderlahbaiel/Automated-Testing-Deployment-of-NextCloud-on-Bare-Metal-Cloud.git
-    ```
-2. **Deploy Infrastructure**: Navigate to `infrastructure_deployment/` and follow the instructions in `README.md`.
-3. **Deploy NextCloud**: Use the Helm charts in `nextcloud_deployment/` for deploying NextCloud on your Kubernetes cluster.
-4. **Run Tests**: Use the scripts in `Tests/` to run automated tests for functional and security validation.
